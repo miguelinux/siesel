@@ -1,0 +1,10 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "siesel"
+dynamic = ["version"]
+
+[tool.hatch.version]
+path = "src/hatch_demo/__about__.py"
