@@ -9,15 +9,6 @@
 Ejemplo de un modulo
 """
 
+from . import main
 
-def main():
-    """
-    Comentario de la función
-    """
-    print("Hola Mundo")
-
-    return 0
-
-
-if __name__ == "__main__":
-    main()
+main()
