@@ -14,10 +14,12 @@ def main():
     """
     Comentario de la función
     """
-    print("Hola Mundo")
+    print("Hola Miguel")
 
     return 0
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+
+    sys.exit(main())
