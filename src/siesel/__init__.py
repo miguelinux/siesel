@@ -6,15 +6,23 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 """
-Ejemplo de un modulo
+Siesel (CXL) init module
 """
+
+from .config import get_config
+from .config import parse_args
 
 
 def main():
     """
-    Comentario de la función
+    Siesel main funcion
     """
+    args = parse_args()
+    conf = get_config(args)
+
     print("Hola Miguel")
+    print(args.config_file)
+    print(conf)
 
     return 0
 
