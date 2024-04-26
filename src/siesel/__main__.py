@@ -9,6 +9,8 @@
 The main entry point python module
 """
 
+import sys
+
 from . import main
 
-main()
+sys.exit(main())

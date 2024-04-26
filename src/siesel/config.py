@@ -18,16 +18,44 @@ from .__about__ import __version__
 
 def read_conf_from(path, conf):
     """Read configuration from a file located in path variable"""
-    if os.path.exists():
-        pass
-    return None
+    values = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as my_file:
+            for line in my_file:
+                if not line:
+                    continue
+                if line.strip()[0] == "#":
+                    continue
+
+                item = line.split("=")
+                if len(item) == 2:
+                    values[item[0].strip().lower()] = item[1].strip().lower()
+
+        for val in conf:
+            if val in values:
+                conf[val] = values[val]
+
+    return conf
 
 
-def read_conf_env(_conf):
+def read_conf_env(conf):
     """Read configuration from environment variables"""
     kp = os.environ.get("SIESEL_KERNEL_PATH")
     cf = os.environ.get("SIESEL_CONFIG_FILE")
-    return None
+    if kp:
+        conf["kernel_path"] = kp
+    if cf:
+        conf["config_file"] = cf
+    return conf
+
+
+def read_conf_cmdline(args, conf):
+    """Read configuration from command line arguments"""
+    if args.kernel_path:
+        conf["kernel_path"] = args.kernel_path
+    if args.config_file:
+        conf["config_file"] = args.config_file
+    return conf
 
 
 def get_config(args):
@@ -53,6 +81,8 @@ def get_config(args):
             myconf = read_conf_from(f"{home}/.config/siesel.conf", myconf)
         # Read from environment variables
         myconf = read_conf_env(myconf)
+        # Read from cmdline
+        myconf = read_conf_cmdline(args, myconf)
     elif myos == "Darwin":
         pass
     elif myos == "Windows":

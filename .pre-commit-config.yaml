@@ -67,3 +67,12 @@ repos:
     rev: v8.18.2
     hooks:
       - id: gitleaks
+  - repo: https://github.com/pylint-dev/pylint
+    rev: 'v3.1.0'
+    hooks:
+    - id: pylint
+      name: pylint
+      entry: pylint
+      language: python
+      types: [python]
+      require_serial: true
