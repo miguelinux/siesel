@@ -9,8 +9,8 @@
 Siesel (CXL) init module
 """
 
-from .config import get_config
-from .config import parse_args
+from siesel.config import get_config
+from siesel.config import parse_args
 
 
 def main():

@@ -11,6 +11,6 @@ The main entry point python module
 
 import sys
 
-from . import main
+from siesel import main
 
 sys.exit(main())

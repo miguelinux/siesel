@@ -13,11 +13,12 @@ import os
 from argparse import ArgumentParser
 from platform import system
 
-from .__about__ import __version__
+from siesel.__about__ import __version__
 
 
 def read_conf_from(path, conf):
     """Read configuration from a file located in path variable"""
+    two_items = 2
     values = {}
     if os.path.exists(path):
         with open(path, encoding="utf-8") as my_file:
@@ -28,7 +29,7 @@ def read_conf_from(path, conf):
                     continue
 
                 item = line.split("=")
-                if len(item) == 2:
+                if len(item) == two_items:
                     values[item[0].strip().lower()] = item[1].strip().lower()
 
         for val in conf:
@@ -119,6 +120,4 @@ def parse_args():
         "--version", action="version", version="%(prog)s " + __version__
     )
 
-    args = parser.parse_args()
-
-    return args
+    return parser.parse_args()
