@@ -22,7 +22,11 @@ from siesel.config import read_conf_env
 )
 def test_read_conf_env(kernel_path, config_file):
     """Test the read conf env function"""
-    os.environ["SIESEL_KERNEL_PATH"] = kernel_path
-    os.environ["SIESEL_CONFIG_FILE"] = config_file
-    expected = {"kernel_path": kernel_path, "config_file": config_file}
-    assert expected == read_conf_env(expected)
+    expected = {}
+    if kernel_path:
+        os.environ["SIESEL_KERNEL_PATH"] = kernel_path
+        expected["kernel_path"] = kernel_path
+    if config_file:
+        os.environ["SIESEL_CONFIG_FILE"] = config_file
+        expected["config_file"] = kernel_path
+    assert expected == read_conf_env(expected)  # nosec B101
