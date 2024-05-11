@@ -11,6 +11,7 @@ Config functions
 
 import os
 from argparse import ArgumentParser
+from argparse import Namespace
 from platform import system
 
 from siesel.__about__ import __version__
@@ -50,7 +51,7 @@ def read_conf_env(conf: dict) -> dict:
     return conf
 
 
-def read_conf_cmdline(args, conf: dict) -> dict:
+def read_conf_cmdline(args: Namespace, conf: dict) -> dict:
     """Read configuration from command line arguments"""
     if args.kernel_path:
         conf["kernel_path"] = args.kernel_path
@@ -59,7 +60,7 @@ def read_conf_cmdline(args, conf: dict) -> dict:
     return conf
 
 
-def get_config(args: object) -> dict:
+def get_config(args: Namespace) -> dict:
     """
     Get configuration finding/reading it, in the next order
     1. system-wide: /etc/siesel.conf
