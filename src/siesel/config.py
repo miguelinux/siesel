@@ -52,10 +52,10 @@ def read_conf_env(conf):
 
 def read_conf_cmdline(args, conf):
     """Read configuration from command line arguments"""
-    if args.kernel_path:
-        conf["kernel_path"] = args.kernel_path
-    if args.config_file:
-        conf["config_file"] = args.config_file
+    if args.get("kernel_path"):
+        conf["kernel_path"] = args.get("kernel_path")
+    if args.get("config_file"):
+        conf["config_file"] = args.get("config_file")
     return conf
 
 
