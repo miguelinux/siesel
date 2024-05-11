@@ -11,6 +11,7 @@ Siesel (CXL) init module
 
 from siesel.config import get_config
 from siesel.config import parse_args
+from siesel.kernel import get_cxl_features
 
 
 def main(args=None):
@@ -19,12 +20,9 @@ def main(args=None):
     """
     myargs = parse_args(args)
     conf = get_config(myargs)
+    ret = get_cxl_features(conf["kernel_path"])
 
-    print("Hola Miguel")
-    print(myargs.config_file)
-    print(conf)
-
-    return 0
+    return ret
 
 
 if __name__ == "__main__":
