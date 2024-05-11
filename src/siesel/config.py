@@ -53,7 +53,7 @@ def read_conf_env(conf: dict) -> dict:
 
 def read_conf_cmdline(args: Namespace, conf: dict) -> dict:
     """Read configuration from command line arguments"""
-    if args.kernel_path:
+    if args.kernel_path != ".":
         conf["kernel_path"] = args.kernel_path
     if args.config_file:
         conf["config_file"] = args.config_file
