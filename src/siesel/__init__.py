@@ -13,15 +13,15 @@ from siesel.config import get_config
 from siesel.config import parse_args
 
 
-def main():
+def main(args=None):
     """
     Siesel main funcion
     """
-    args = parse_args()
-    conf = get_config(args)
+    myargs = parse_args(args)
+    conf = get_config(myargs)
 
     print("Hola Miguel")
-    print(args.config_file)
+    print(myargs.config_file)
     print(conf)
 
     return 0
@@ -30,4 +30,4 @@ def main():
 if __name__ == "__main__":
     import sys
 
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

@@ -92,7 +92,7 @@ def get_config(args):
     return myconf
 
 
-def parse_args():
+def parse_args(args):
     """Parse arguments from command line interface"""
     parser = ArgumentParser(
         prog=__name__,
@@ -120,4 +120,4 @@ def parse_args():
         "--version", action="version", version="%(prog)s " + __version__
     )
 
-    return parser.parse_args()
+    return parser.parse_args(args)
