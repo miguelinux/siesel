@@ -16,7 +16,7 @@ from platform import system
 from siesel.__about__ import __version__
 
 
-def read_conf_from(path, conf):
+def read_conf_from(path: str, conf: dict) -> dict:
     """Read configuration from a file located in path variable"""
     two_items = 2
     values = {}
@@ -39,7 +39,7 @@ def read_conf_from(path, conf):
     return conf
 
 
-def read_conf_env(conf):
+def read_conf_env(conf: dict) -> dict:
     """Read configuration from environment variables"""
     kp = os.environ.get("SIESEL_KERNEL_PATH")
     cf = os.environ.get("SIESEL_CONFIG_FILE")
@@ -50,16 +50,16 @@ def read_conf_env(conf):
     return conf
 
 
-def read_conf_cmdline(args, conf):
+def read_conf_cmdline(args, conf: dict) -> dict:
     """Read configuration from command line arguments"""
-    if args.get("kernel_path"):
-        conf["kernel_path"] = args.get("kernel_path")
-    if args.get("config_file"):
-        conf["config_file"] = args.get("config_file")
+    if args.kernel_path:
+        conf["kernel_path"] = args.kernel_path
+    if args.config_file:
+        conf["config_file"] = args.config_file
     return conf
 
 
-def get_config(args):
+def get_config(args: object) -> dict:
     """
     Get configuration finding/reading it, in the next order
     1. system-wide: /etc/siesel.conf
@@ -69,7 +69,7 @@ def get_config(args):
     """
     myos = system()
     myconf = {
-        "kernel_path": "",
+        "kernel_path": ".",
         "config_file": "",
     }
 
@@ -92,7 +92,7 @@ def get_config(args):
     return myconf
 
 
-def parse_args(args):
+def parse_args(vargs: list) -> object:
     """Parse arguments from command line interface"""
     parser = ArgumentParser(
         prog=__name__,
@@ -120,4 +120,4 @@ def parse_args(args):
         "--version", action="version", version="%(prog)s " + __version__
     )
 
-    return parser.parse_args(args)
+    return parser.parse_args(vargs)

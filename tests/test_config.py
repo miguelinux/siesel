@@ -10,6 +10,7 @@ Prueba de config.py
 """
 
 import os
+from argparse import Namespace
 
 import pytest
 
@@ -39,11 +40,26 @@ def test_read_conf_env(kernel_path, config_file):
 )
 def test_read_conf_cmdline(kernel_path, config_file):
     """Test the read conf env function"""
-    expected = {}
+
+    class _TArgs(Namespace):
+        kernel_path = "test value"
+        config_file = "test value"
+
+    targs = _TArgs()
+    expected = {
+        "kernel_path": "test value",
+        "config_file": "test value",
+    }
+    tconf = {
+        "kernel_path": "any value",
+        "config_file": "any value",
+    }
+
     if kernel_path:
         expected["kernel_path"] = kernel_path
+        targs.kernel_path = kernel_path
     if config_file:
-        expected["config_file"] = kernel_path
-    args = expected.copy()
-    conf = expected.copy()
-    assert expected == read_conf_cmdline(args, conf)  # nosec B101
+        expected["config_file"] = config_file
+        targs.config_file = config_file
+
+    assert expected == read_conf_cmdline(targs, tconf)  # nosec B101
