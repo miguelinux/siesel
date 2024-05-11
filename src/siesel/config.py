@@ -13,11 +13,12 @@ import os
 from argparse import ArgumentParser
 from argparse import Namespace
 from platform import system
+from sys import stderr
 
 from siesel.__about__ import __version__
 
 
-def read_conf_from(path: str, conf: dict) -> dict:
+def read_conf_from(path: str, conf: dict, show_file_exist=False) -> dict:
     """Read configuration from a file located in path variable"""
     two_items = 2
     values = {}
@@ -36,6 +37,10 @@ def read_conf_from(path: str, conf: dict) -> dict:
         for val in conf:
             if val in values:
                 conf[val] = values[val]
+
+    # The file in path does not exist
+    elif show_file_exist:
+        print(f"{path}: not found", file=stderr)
 
     return conf
 
@@ -85,6 +90,11 @@ def get_config(args: Namespace) -> dict:
         myconf = read_conf_env(myconf)
         # Read from cmdline
         myconf = read_conf_cmdline(args, myconf)
+
+        # Read config file provided by cmdline
+        if myconf["config_file"]:
+            myconf = read_conf_from(myconf["config_file"], myconf, show_file_exist=True)
+
     elif myos == "Darwin":
         pass
         # Do a test on Mac OS
