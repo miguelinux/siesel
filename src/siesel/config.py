@@ -24,7 +24,7 @@ def read_conf_from(path: str, conf: dict) -> dict:
     if os.path.exists(path):
         with open(path, encoding="utf-8") as my_file:
             for line in my_file:
-                if not line:
+                if not line or not line.strip():
                     continue
                 if line.strip()[0] == "#":
                     continue
@@ -87,8 +87,10 @@ def get_config(args: Namespace) -> dict:
         myconf = read_conf_cmdline(args, myconf)
     elif myos == "Darwin":
         pass
+        # Do a test on Mac OS
     elif myos == "Windows":
         pass
+        # Do a test on Windows OS
 
     return myconf
 

@@ -16,6 +16,7 @@ import pytest
 
 from siesel.config import read_conf_cmdline
 from siesel.config import read_conf_env
+from siesel.config import read_conf_from
 
 
 @pytest.mark.parametrize(
@@ -39,7 +40,7 @@ def test_read_conf_env(kernel_path, config_file):
     [("a_path", "a_file"), ("a_path", None), (None, "a_file"), (None, None)],
 )
 def test_read_conf_cmdline(kernel_path, config_file):
-    """Test the read conf env function"""
+    """Test the read conf cmdline function"""
 
     class _TArgs(Namespace):
         kernel_path = "test value"
@@ -63,3 +64,37 @@ def test_read_conf_cmdline(kernel_path, config_file):
         targs.config_file = config_file
 
     assert expected == read_conf_cmdline(targs, tconf)  # nosec B101
+
+
+@pytest.mark.parametrize(
+    "kernel_path,config_file",
+    [("a_path", "a_file"), ("a_path", None), (None, "a_file"), (None, None)],
+)
+def test_read_conf_from(kernel_path, config_file, tmp_path):
+    str_kp = ""
+    str_cf = ""
+
+    expected = {
+        "kernel_path": "test value",
+        "config_file": "test value",
+    }
+    tconf = {
+        "kernel_path": "test value",
+        "config_file": "test value",
+    }
+
+    if kernel_path:
+        expected["kernel_path"] = kernel_path
+        str_kp = f"KERNEL_PATH = {kernel_path}"
+    if config_file:
+        expected["config_file"] = config_file
+        str_cf = f"CONFIG_FILE={config_file}"
+
+    file_content = f"# config tes file\n{str_kp}\n  # more comments\n{str_cf}\n"
+
+    d = tmp_path / "config"
+    d.mkdir()
+    f = d / "siesel.conf"
+    f.write_text(file_content, encoding="utf-8")
+
+    assert expected == read_conf_from(str(f), tconf)  # nosec B101
