@@ -1,0 +1,3 @@
+smmap
+gitdb
+GitPython
