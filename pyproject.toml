@@ -25,8 +25,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "smmap"
-  "gitdb"
+  "smmap",
+  "gitdb",
   "GitPython"
 ]
 
