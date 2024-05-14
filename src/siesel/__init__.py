@@ -18,7 +18,7 @@ def main(args=None):
     """
     Siesel main funcion
     """
-    myargs = parse_args(args)
+    myargs = parse_args(args, __name__)
     conf = get_config(myargs)
     ret = get_cxl_features(conf["kernel_path"])
 

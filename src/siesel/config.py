@@ -105,10 +105,10 @@ def get_config(args: Namespace) -> dict:
     return myconf
 
 
-def parse_args(vargs: list) -> object:
+def parse_args(vargs: list, prog_name: str = __name__) -> object:
     """Parse arguments from command line interface"""
     parser = ArgumentParser(
-        prog=__name__,
+        prog=prog_name,
         description="Script to identify CXL features from Linux Kernel",
     )
     parser.add_argument(
