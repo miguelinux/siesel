@@ -20,9 +20,8 @@ def main(args=None):
     """
     myargs = parse_args(args, __name__)
     conf = get_config(myargs)
-    ret = get_cxl_features(conf["kernel_path"])
 
-    return ret
+    return get_cxl_features(conf["kernel_path"])
 
 
 if __name__ == "__main__":
