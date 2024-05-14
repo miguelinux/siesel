@@ -20,11 +20,12 @@ from siesel.__about__ import __version__
 
 def read_conf_from(path: str, conf: dict, show_file_exist=False) -> dict:
     """Read configuration from a file located in path variable"""
+    # the items are: variable and value (i.e. variable = value)
     two_items = 2
     values = {}
     if os.path.exists(path):
-        with open(path, encoding="utf-8") as my_file:
-            for line in my_file:
+        with open(path, encoding="utf-8") as conf_file:
+            for line in conf_file:
                 if not line or not line.strip():
                     continue
                 if line.strip()[0] == "#":

@@ -12,6 +12,53 @@ Kernel repo functions
 import os
 from sys import stderr
 
+KERNEL_VERSION: dict = {}
+
+
+def get_kernel_version(path: str) -> dict:
+    """Get the current kernel version from Makefile"""
+
+    kernel_version = {
+        "version": 0,
+        "patchlevel": 0,
+        "sublevel": 0,
+        "extraversion": "",
+    }
+
+    makefile_path = os.path.join(path, "Makefile")
+    # 4 values to count in Makefile
+    values_count = 0
+    # the items are: variable and value (i.e. variable = value)
+    two_items = 2
+    with open(makefile_path, encoding="utf-8") as makefile:
+        # Read the Makefile
+        for a_line in makefile:
+            if not a_line or not a_line.strip():
+                continue
+
+            if a_line.strip()[0] == "#":
+                continue
+
+            item = a_line.split("=")
+            if len(item) == two_items:
+                if item[0].strip().lower() == "version":
+                    kernel_version["version"] = item[1].strip()
+                    values_count += 1
+                if item[0].strip().lower() == "patchlevel":
+                    kernel_version["patchlevel"] = item[1].strip()
+                    values_count += 1
+                if item[0].strip().lower() == "sublevel":
+                    kernel_version["sublevel"] = item[1].strip()
+                    values_count += 1
+                if item[0].strip().lower() == "extraversion":
+                    kernel_version["extraversion"] = item[1].strip()
+                    values_count += 1
+
+            if values_count == 4:
+                break
+
+    return kernel_version
+
 
 def is_valid_git_repo(path: str) -> bool:
     """Validate is the kernel git repo"""
@@ -23,6 +70,11 @@ def is_valid_git_repo(path: str) -> bool:
     p = os.path.join(path, ".git")
     if not os.path.exists(p):
         print(f"{p}: not found. Is not a git repo", file=stderr)
+        return False
+
+    p = os.path.join(path, "Makefile")
+    if not os.path.exists(p):
+        print(f"{p}: not found.", file=stderr)
         return False
 
     p = os.path.join(path, "drivers", "cxl")
@@ -38,5 +90,8 @@ def get_cxl_features(kernel_path: str) -> int:
 
     if not is_valid_git_repo(kernel_path):
         return 1
+
+    global KERNEL_VERSION
+    KERNEL_VERSION = get_kernel_version(kernel_path)
 
     return 0
