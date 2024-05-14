@@ -12,8 +12,6 @@ Kernel repo functions
 import os
 from sys import stderr
 
-KERNEL_VERSION: dict = {}
-
 
 def get_kernel_version(path: str) -> dict:
     """Get the current kernel version from Makefile"""
@@ -91,7 +89,6 @@ def get_cxl_features(kernel_path: str) -> int:
     if not is_valid_git_repo(kernel_path):
         return 1
 
-    global KERNEL_VERSION
-    KERNEL_VERSION = get_kernel_version(kernel_path)
+    kernel_version = get_kernel_version(kernel_path)
 
     return 0
