@@ -48,12 +48,15 @@ def read_conf_from(path: str, conf: dict, show_file_exist=False) -> dict:
 
 def read_conf_env(conf: dict) -> dict:
     """Read configuration from environment variables"""
-    kp = os.environ.get("SIESEL_KERNEL_PATH")
-    cf = os.environ.get("SIESEL_CONFIG_FILE")
-    if kp:
-        conf["kernel_path"] = kp
-    if cf:
-        conf["config_file"] = cf
+    k_p = os.environ.get("SIESEL_KERNEL_PATH")
+    c_f = os.environ.get("SIESEL_CONFIG_FILE")
+    f_t = os.environ.get("SIESEL_FROM_TAG")
+    if k_p:
+        conf["kernel_path"] = k_p
+    if c_f:
+        conf["config_file"] = c_f
+    if f_t:
+        conf["from_tag"] = f_t
     return conf
 
 
@@ -63,6 +66,8 @@ def read_conf_cmdline(args: Namespace, conf: dict) -> dict:
         conf["kernel_path"] = args.kernel_path
     if args.config_file:
         conf["config_file"] = args.config_file
+    if args.from_tag:
+        conf["from_tag"] = args.from_tag
     return conf
 
 
@@ -78,6 +83,7 @@ def get_config(args: Namespace) -> dict:
     myconf = {
         "kernel_path": ".",
         "config_file": "",
+        "from_tag": "",
     }
 
     if myos == "Linux":
@@ -110,7 +116,7 @@ def parse_args(vargs: list, prog_name: str = __name__) -> object:
     """Parse arguments from command line interface"""
     parser = ArgumentParser(
         prog=prog_name,
-        description="Script to identify CXL features from Linux Kernel",
+        description="Script to identify CXL features from Linux Kernel.",
     )
     parser.add_argument(
         "-k",
@@ -119,7 +125,7 @@ def parse_args(vargs: list, prog_name: str = __name__) -> object:
         default=".",
         metavar="PATH",
         dest="kernel_path",
-        help='path to the Kernel repo (default ".")',
+        help='path to the Kernel repo (default ".").',
     )
     parser.add_argument(
         "-c",
@@ -128,7 +134,16 @@ def parse_args(vargs: list, prog_name: str = __name__) -> object:
         default="",
         metavar="FILE",
         dest="config_file",
-        help="specify the config file",
+        help="specify the config file.",
+    )
+    parser.add_argument(
+        "-f",
+        "--from",
+        action="store",
+        default="",
+        metavar="COMMIT/TAG",
+        dest="from_tag",
+        help="specify the commit id or tag to start to looking for features.",
     )
     parser.add_argument(
         "--version", action="version", version="%(prog)s " + __version__
