@@ -158,7 +158,7 @@ def parse_args(vargs: list, prog_name: str = __name__) -> object:
         default="HEAD",
         metavar="COMMIT/TAG",
         dest="to_tag",
-        help="specify the latest commit id or tag to looking for features.",
+        help='specify the latest commit id or tag to looking for features (default "HEAD").',
     )
     parser.add_argument(
         "--version", action="version", version="%(prog)s " + __version__
