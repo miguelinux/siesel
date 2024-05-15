@@ -51,12 +51,15 @@ def read_conf_env(conf: dict) -> dict:
     k_p = os.environ.get("SIESEL_KERNEL_PATH")
     c_f = os.environ.get("SIESEL_CONFIG_FILE")
     f_t = os.environ.get("SIESEL_FROM_TAG")
+    t_t = os.environ.get("SIESEL_TO_TAG")
     if k_p:
         conf["kernel_path"] = k_p
     if c_f:
         conf["config_file"] = c_f
     if f_t:
         conf["from_tag"] = f_t
+    if t_t:
+        conf["to_tag"] = t_t
     return conf
 
 
@@ -68,6 +71,8 @@ def read_conf_cmdline(args: Namespace, conf: dict) -> dict:
         conf["config_file"] = args.config_file
     if args.from_tag:
         conf["from_tag"] = args.from_tag
+    if args.to_tag:
+        conf["to_tag"] = args.to_tag
     return conf
 
 
@@ -84,6 +89,7 @@ def get_config(args: Namespace) -> dict:
         "kernel_path": ".",
         "config_file": "",
         "from_tag": "",
+        "to_tag": "",
     }
 
     if myos == "Linux":
@@ -144,6 +150,15 @@ def parse_args(vargs: list, prog_name: str = __name__) -> object:
         metavar="COMMIT/TAG",
         dest="from_tag",
         help="specify the commit id or tag to start to looking for features.",
+    )
+    parser.add_argument(
+        "-t",
+        "--to",
+        action="store",
+        default="HEAD",
+        metavar="COMMIT/TAG",
+        dest="to_tag",
+        help="specify the latest commit id or tag to looking for features.",
     )
     parser.add_argument(
         "--version", action="version", version="%(prog)s " + __version__
