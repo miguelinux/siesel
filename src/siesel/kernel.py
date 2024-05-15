@@ -83,12 +83,12 @@ def is_valid_git_repo(path: str) -> bool:
     return True
 
 
-def get_cxl_features(kernel_path: str) -> int:
+def get_cxl_features(conf: dict) -> int:
     """Get the CXL features from the kernel repo"""
 
-    if not is_valid_git_repo(kernel_path):
+    if not is_valid_git_repo(conf["kernel_path"]):
         return 1
 
-    kernel_version = get_kernel_version(kernel_path)
+    kernel_version = get_kernel_version(conf["kernel_path"])
 
     return 0
