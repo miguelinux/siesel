@@ -19,9 +19,9 @@ def get_kernel_version(path: str) -> dict:
     """Get the current kernel version from Makefile"""
 
     kernel_version = {
-        "version": 0,
-        "patchlevel": 0,
-        "sublevel": 0,
+        "version": "0",
+        "patchlevel": "0",
+        "sublevel": "0",
         "extraversion": "",
     }
 
@@ -60,6 +60,27 @@ def get_kernel_version(path: str) -> dict:
     return kernel_version
 
 
+def get_previous_release_kernel_version(current_kernel: dict) -> dict:
+    """Get the previos kernel release which is NOT a -RC version"""
+
+    previous_kernel = current_kernel.copy()
+
+    if previous_kernel["extraversion"]:
+        previous_kernel["extraversion"] = ""
+
+    if previous_kernel["sublevel"] != "0":
+        previous_kernel["sublevel"] = "0"
+
+    if previous_kernel["patchlevel"] == "0":
+        # Currently this is guessing, we need to set properly
+        previous_kernel["patchlevel"] = "19"
+        previous_kernel["version"] = str(int(previous_kernel["version"]) - 1)
+    else:
+        previous_kernel["patchlevel"] = str(int(previous_kernel["patchlevel"]) - 1)
+
+    return previous_kernel
+
+
 def is_valid_git_repo(path: str) -> bool:
     """Validate is the kernel git repo"""
 
@@ -94,12 +115,22 @@ def get_cxl_features(conf: dict) -> int:
     kernel_version = get_kernel_version(conf["kernel_path"])
     repo = Repo(conf["kernel_path"])
 
-    p = os.path.join(conf["kernel_path"], "drivers", "cxl")
-    commits_gen = repo.iter_commits(rev="v6.8...v6.9", paths=p)
-    commits = list(commits_gen)
-    for c in commits:
+    cxl_path = os.path.join(conf["kernel_path"], "drivers", "cxl")
+
+    if not conf["from_tag"]:
+        previous = get_previous_release_kernel_version(kernel_version)
+        revision = "v" + previous["version"] + "." + previous["patchlevel"]
+    else:
+        revision = conf["from_tag"]
+
+    revision += "..." + conf["to_tag"]
+
+    commits_gen = repo.iter_commits(rev=revision, paths=cxl_path)
+    # commits = list(commits_gen)
+    for c in commits_gen:
+        if "fix" in c.summary.lower() or "Merge" in c.summary:
+            continue
         print(c.summary)
-        print()
-        print(c.message)
+        # print(c.message)
 
     return 0
