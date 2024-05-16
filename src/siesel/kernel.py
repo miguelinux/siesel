@@ -12,6 +12,8 @@ Kernel repo functions
 import os
 from sys import stderr
 
+from git import Repo
+
 
 def get_kernel_version(path: str) -> dict:
     """Get the current kernel version from Makefile"""
@@ -90,5 +92,14 @@ def get_cxl_features(conf: dict) -> int:
         return 1
 
     kernel_version = get_kernel_version(conf["kernel_path"])
+    repo = Repo(conf["kernel_path"])
+
+    p = os.path.join(conf["kernel_path"], "drivers", "cxl")
+    commits_gen = repo.iter_commits(rev="v6.8...v6.9", paths=p)
+    commits = list(commits_gen)
+    for c in commits:
+        print(c.summary)
+        print()
+        print(c.message)
 
     return 0
