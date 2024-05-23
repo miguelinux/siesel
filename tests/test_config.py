@@ -19,11 +19,11 @@ from siesel.config import read_conf_env
 from siesel.config import read_conf_from
 
 
-@pytest.mark.parametrize(
-    "kernel_path,config_file",
-    [("a_path", "a_file"), ("a_path", None), (None, "a_file"), (None, None)],
-)
-def test_read_conf_env(kernel_path, config_file):
+@pytest.mark.parametrize("kernel_path", ["a_path", None])
+@pytest.mark.parametrize("config_file", ["a_file", None])
+@pytest.mark.parametrize("from_tag", ["a_iniTag", None])
+@pytest.mark.parametrize("to_tag", ["a_endTag", None])
+def test_read_conf_env(kernel_path, config_file, from_tag, to_tag):
     """Test the read conf env function"""
     expected = {}
     if kernel_path:
@@ -45,6 +45,8 @@ def test_read_conf_cmdline(kernel_path, config_file):
     class _TArgs(Namespace):
         kernel_path = "test value"
         config_file = "test value"
+        from_tag = "test value"
+        to_tag = "test value"
 
     targs = _TArgs()
     expected = {
