@@ -1,0 +1,31 @@
+5d211c709059 cxl: Fix cxl_endpoint_get_perf_coordinate() support for RCH
+4b759dd57655 cxl/core: Fix potential payload size confusion in cxl_mem_get_poison()
+586b5dfb51b9 Merge tag 'cxl-fixes-6.9-rc4' of git://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl
+7bcf809b1e78 cxl: Add checks to access_coordinate calculation to fail missing data
+001c5d19341a cxl: Consolidate dport access_coordinate ->hb_coord and ->sw_coord into ->coord
+51293c565cf4 cxl: Fix incorrect region perf data calculation
+592780b8391f cxl: Fix retrieving of access_coordinates in PCIe path
+648dae58a830 cxl: Remove checking of iter in cxl_endpoint_get_perf_coordinates()
+f7c52345ccc9 cxl/core: Fix initialization of mbox_cmd.size_out in get event
+5c88a9ccd4c4 cxl/core/regs: Fix usage of map->reg_type in cxl_decode_regblock() before assigned
+b7c59b038c65 cxl/mem: Fix for the index of Clear Event Record Handle
+a46aba14cf8f cxl: remove CONFIG_CXL_PMU entry in drivers/cxl/Kconfig
+ad584d73a22b Merge tag 'trace-v6.9-2' of git://git.kernel.org/pub/scm/linux/kernel/git/trace/linux-trace
+6c8712609652 cxl/trace: Properly initialize cxl_poison region name
+88482878c3b4 Merge branch 'for-6.9/cxl-fixes' into for-6.9/cxl
+75f4d93ee8fa Merge branch 'for-6.9/cxl-einj' into for-6.9/cxl
+d5c0078033e2 Merge branch 'for-6.9/cxl-qos' into for-6.9/cxl
+c6c3187d66bc lib/firmware_table: Provide buffer length argument to cdat_table_parse()
+e0c818e00443 cxl/pci: Get rid of pointer arithmetic reading CDAT table
+ec8ffff3a9f8 cxl/pci: Rename DOE mailbox handle to doe_mb
+99b52aac2d40 cxl: Fix the incorrect assignment of SSLBIS entry pointer initial location
+8039804cfa73 cxl/core: Add CXL EINJ debugfs files
+debdce20c4f2 cxl/region: Deal with numa nodes not enumerated by SRAT
+067353a46d8c cxl/region: Add memory hotplug notifier for cxl region
+c20eaf44113e cxl/region: Add sysfs attribute for locality attributes of CXL regions
+3d9f4a197230 cxl/region: Calculate performance data for a region
+3d8be8b398e3 cxl: Set cxlmd->endpoint before adding port device
+6ef83c4e19e9 cxl: Move QoS class to be calculated from the nearest CPU
+863027d40993 cxl: Split out host bridge access coordinates
+032f7b37adff cxl: Split out combine_coordinates() for common shared usage
+bd98cbbbf82a ACPI: HMAT / cxl: Add retrieval of generic port coordinates for both access classes

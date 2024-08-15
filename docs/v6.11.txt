@@ -1,0 +1,18 @@
+e62f81bbd24d Merge tag 'cxl-for-6.11' of git://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl
+c2a96b7f187f Merge tag 'driver-core-6.11-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core
+a0328b397f33 cxl/core/pci: Move reading of control register to immediately before usage
+56478475560b Merge branch 'for-6.11/xor_fixes' into cxl-for-next
+8f55ada79656 cxl: Remove defunct code calculating host bridge target positions
+82a3e3a23563 cxl/region: Verify target positions using the ordered target list
+3b2fedcd75e3 cxl: Restore XOR'd position bits during address translation
+9aa5f6235e16 cxl/core: Fold cxl_trace_hpa() into cxl_dpa_to_hpa()
+591209c79844 cxl/memdev: Replace ENXIO with EBUSY for inject poison limit reached
+bebfbbaffccf cxl/acpi: Warn on mixed CXL VH and RCH/RCD Hierarchy
+8ecef8e01a08 cxl/core: Fix incorrect vendor debug UUID define
+d69d80484598 driver core: have match() callback in struct bus_type take a const *
+f3d70720e92c cxl/region: Simplify cxl_region_nid()
+643e8e3e6529 cxl/region: Support to calculate memory tier abstract distance
+a3483ee7e6a7 cxl/region: Fix a race condition in memory hotplug notifier
+a0caa19711ce cxl: add missing MODULE_DESCRIPTION() macros
+675e979db473 cxl/events: Use a common struct for DRAM and General Media events
+b5dd424181f3 Merge tag 'v6.10-rc4' into driver-core-next
