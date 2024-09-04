@@ -1,3 +1,4 @@
+8c251c5ab1b7 cxl/pci: Get AER capability address from RCRB only for RCH dport
 e62f81bbd24d Merge tag 'cxl-for-6.11' of git://git.kernel.org/pub/scm/linux/kernel/git/cxl/cxl
 c2a96b7f187f Merge tag 'driver-core-6.11-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core
 a0328b397f33 cxl/core/pci: Move reading of control register to immediately before usage
